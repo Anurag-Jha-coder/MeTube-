@@ -2,9 +2,10 @@
   "name": "metube",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "Javascript",
@@ -12,8 +13,12 @@
   ],
   "author": "Anurag Kumar Jha",
   "license": "ISC",
-  
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.4"
   }
 }
