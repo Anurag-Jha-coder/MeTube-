@@ -11,7 +11,7 @@ const subscriptionSchema = new Schema({
         type: Schema.Types.ObjectId, //one to whom 'subscriber' is subscribing
         ref:"User"
     }
-} {timestamps : true})
+}, {timestamps : true})
 
 
 export const Subscription = mongoose.model("Subscription", subscriptionSchema)
