@@ -159,8 +159,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined,
+      $unset: {
+        refreshToken: 1,// this removes the field from the document
       },
     },
     {
@@ -228,8 +228,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-
+  const { oldPassword, newPassword } = req.body
+  
   const user = await User.findById(req.user?._id);
   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
 
@@ -248,7 +248,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
-    .json(200, req.user, "current user fetched successfully");
+    .json(new ApiResponse (200, req.user, "current user fetched successfully"));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -275,7 +275,8 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 });
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
-  const avatarLocalPath = req.file?.avatar?.path;
+  const avatarLocalPath = req.file?.path;
+  console.log(avatarLocalPath)
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is missing ");
@@ -305,16 +306,16 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 });
 
 const updateCoverImage = asyncHandler(async (req, res) => {
-  const coverImageLocalPath = req.file?.avatar?.path;
+  const coverImageLocalPath = req.file?.path;
 
   if (!coverImageLocalPath) {
-    throw new ApiError(400, "Avatar file is missing ");
+    throw new ApiError(400, "Coverimage file is missing ");
   }
 
-  const coverImage = await uploadOnCloudinary(avatarLocalPath);
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
   if (!coverImage.url) {
-    throw new ApiError(500, "Errot while uploading avatar");
+    throw new ApiError(500, "Errot while uploading coverImage");
   }
 
   const user = await User.findByIdAndUpdate(
@@ -335,9 +336,10 @@ const updateCoverImage = asyncHandler(async (req, res) => {
 });
 
 const getUserChanelProfile = asyncHandler(async (req, res) => {
-  const { username } = req.params;
+  const {username} = req.params;
+  console.log(username)
 
-  if (!username.trim(s)) {
+  if (!username.trim()) {
     throw new ApiError(400, "username is missing");
   }
 
@@ -371,7 +373,7 @@ const getUserChanelProfile = asyncHandler(async (req, res) => {
         },
 
         channelIsSubscribedToCount: {
-          $size: "$channel",
+          $size: "$subscribedTo",
         },
 
         isSubscribed: {
