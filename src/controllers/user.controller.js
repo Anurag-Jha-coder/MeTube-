@@ -39,6 +39,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const avatarLocalPath = req.files?.avatar[0]?.path;
   //    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  
   let coverImageLocalPath;
   if (
     req.files &&
@@ -54,6 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const avatar = await uploadOnCloudinary(avatarLocalPath);
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+  console.log(avatar)
 
   if (!avatar) {
     throw new ApiError(400, "Avatar file is required");
@@ -415,7 +417,7 @@ const getWatchHistory = asyncHandler( async(req, res) =>{
   const user = await User.aggregate([
     {
       $match : {
-        _id: new mongoose.Types.ObjectId(req.user._id)
+        _id: new mongoose.Types.ObjectId(req.user?._id)
       }
     },
     {
