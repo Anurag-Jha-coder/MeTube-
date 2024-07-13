@@ -50,7 +50,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
       },
       {
         $sort: {
-          [sortBy]: sortType === "asc" ? 1 : -1, //sort is not working properly...ToDo : fix it laterss
+          [sortBy]: sortType === "asc" ? 1 : -1, //sort is not working properly...ToDo : fix
         },
       },
       {
