@@ -155,7 +155,7 @@ const updateVideo = asyncHandler(async (req, res) => {
   if (title.trim() == "" || description.trim() == "") {
     throw new ApiError(400, "title and discription can't be empty ");
   }
-
+  console.log(req.file)
   const localThumbnailPath = req.file?.path;
 
   if (!localThumbnailPath) {
@@ -194,8 +194,11 @@ const deleteVideo = asyncHandler(async (req, res) => {
   //  ***here i have to delete that video from cloudnary too........
   // deleteFromCloudinary(public_id)  ** for this i also have to store public
   // id in our databse with the url
+  if(!isValidObjectId(videoId)){
+    throw new ApiError(401, "Invalid video Id")
+  }
 
-  await Video.deleteOne(videoId);
+  await Video.deleteOne(new mongoose.Types.ObjectId(videoId)); 
 
   return res
     .status(200)
@@ -217,7 +220,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
   video.isPublished = !video.isPublished;
   await video.save({ isValidObjectId: false });
-
+` 1`
   return res
     .status(200)
     .json(

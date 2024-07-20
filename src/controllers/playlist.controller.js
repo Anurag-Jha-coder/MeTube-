@@ -1,14 +1,14 @@
 import mongoose, {isValidObjectId} from "mongoose"
 import {Playlist} from "../models/playlist.model.js"
-import {ApiError} from "../utils/ApiError.js"
+import ApiError from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
-import {asyncHandler} from "../utils/asyncHandler.js"
+import asyncHandler  from "../utils/asyncHandler.js"
 
 
 const createPlaylist = asyncHandler(async (req, res) => {
-    const {name, description} = req.body
 
     //TODO: create playlist
+ 
 
     if(!name || !description){
         throw new ApiError(400, "Name and description are required")
@@ -32,6 +32,7 @@ const createPlaylist = asyncHandler(async (req, res) => {
 const getUserPlaylists = asyncHandler(async (req, res) => {
     const {userId} = req.params
     //TODO: get user playlists
+    console.log(userId)
     if(!isValidObjectId(userId)){
         throw new ApiError(400, "Invalid user id")
     }
@@ -131,10 +132,11 @@ const updatePlaylist = asyncHandler(async (req, res) => {
 
     const playlist = await Playlist.findByIdAndUpdate(playlistId, {
         $set:{
-            name,
-            description,
-        }
-    })
+            name:name,
+            description:description,
+        },
+        
+    },{new:true})
 
     return res
     .status(200)

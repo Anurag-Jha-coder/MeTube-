@@ -6,12 +6,11 @@ import {
   createPlaylist,
   getPlaylistById,
   getUserPlaylists,
-  getPlaylistById,
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   deletePlaylist,
   updatePlaylist,
-} from "../controllers/playlist.controller";
+} from "../controllers/playlist.controller.js";
 
 const router = Router();
 
@@ -27,11 +26,11 @@ router.route("/add-video-playlist/:playlistId/:videoId")
 .get(verifyJWT,addVideoToPlaylist)
 
 router.route("/remove-video-playlist/:playlistId/:videoId")
-.get(verifyJWT,removeVideoFromPlaylist)
+.delete(verifyJWT,removeVideoFromPlaylist)
 
-router.route("/delete-playlist/:playlistId").get(verifyJWT, deletePlaylist)
+router.route("/delete-playlist/:playlistId").delete(verifyJWT, deletePlaylist)
 
-router.route("update-playList/:playlistId").post(verifyJWT,updatePlaylist)
+router.route("/update-playList/:playlistId").patch(verifyJWT,upload.none(), updatePlaylist)
 
 
 

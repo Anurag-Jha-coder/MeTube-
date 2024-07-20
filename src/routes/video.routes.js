@@ -9,7 +9,7 @@ import {
   deleteVideo,
   togglePublishStatus,
 } from "../controllers/video.controller.js";
-import { verify } from "jsonwebtoken";
+
 
 const router = Router();
 
@@ -28,11 +28,12 @@ router.route("/publish-video").post(
   publishAVideo
 );
 
-router.route("/get-videos").get(verifyJWT, getAllVideos);
+router.route("/get-videos").get(verifyJWT, getAllVideos);  // Todo : not working havet to fix it later
 
-router.route("/get-videoById/:videoId").get(verifyJWT, getVideoById);
+router.route("/get-videoById/:videoId").get( verifyJWT, getVideoById);
 
-router.route("update-video/:videoID").patch(verifyJWT, updateVideo);
+router.route("/update-video/:videoID").patch(verifyJWT,
+  upload.single("thumbnail"), updateVideo);
 
 router.route("/delete-video/:videoId").delete(verifyJWT, deleteVideo);
 

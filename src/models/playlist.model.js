@@ -1,14 +1,15 @@
 import mongoose, {Schema} from "mongoose";
 
+
 const playlistSchema = new Schema(
     {
         name: {
-            Type:String,
+            type:String,
             required: true
         },
 
-        discription:{
-            Type:String,
+        description:{
+            type:String,
             required: true
         },
 
