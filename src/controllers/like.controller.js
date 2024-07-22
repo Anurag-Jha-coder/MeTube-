@@ -64,7 +64,6 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 });
 
 
-//TODO: Test toggleTweetLike after creating the Tweet controller
 const toggleTweetLike = asyncHandler(async (req, res) => {
   const { tweetId } = req.params;
 
@@ -96,13 +95,14 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 
 const getLikedVideos = asyncHandler(async (req, res) => {
   //TODO: get all liked videos
-  const likedVideos = await Like.find({ likedBy: req.user._id ,video:{$exists:true}}).populate(
-    "video"
-  );
+  const likedVideos = await Like.find({
+    likedBy: req.user._id,
+    video: { $exists: true },
+  }).populate("video");
 
   if (!likedVideos || likedVideos.length === 0) {
     throw new ApiError(404, "No liked videos found");
-}
+  }
 
   return res
     .status(200)
