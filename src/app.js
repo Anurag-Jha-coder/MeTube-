@@ -31,6 +31,7 @@ import commnetRouter from './routes/comment.routes.js '
 import likeRouter from './routes/like.routes.js'
 import tweetRouter from './routes/tweet.routes.js'
 import subscriberRouter from './routes/subscription.routes.js'
+import dashboardRouter from './routes/dashboard.routes.js'
 
 
 //routes declaration
@@ -41,5 +42,6 @@ app.use('/api/v1/comment', commnetRouter)
 app.use('/api/v1/like', likeRouter) 
 app.use('/api/v1/tweet', tweetRouter)
 app.use('/api/v1/subscription', subscriberRouter)
+app.use('/api/v1/dashboard', dashboardRouter)
 
 export { app }; 
